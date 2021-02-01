@@ -16,7 +16,11 @@ import SearchPage from './view';
 const select = (state, props) => {
   const showMature = makeSelectClientSetting(SETTINGS.SHOW_MATURE)(state);
   const urlParams = new URLSearchParams(props.location.search);
-  const urlQuery = urlParams.get('q') || null;
+  const urlQuery =
+    urlParams
+      .get('q')
+      .replace(/^lbry:\/\//i, '')
+      .replace(/\//, ' ') || null;
   const query = makeSelectQueryWithOptions(
     urlQuery,
     showMature === false ? { nsfw: false, isBackgroundSearch: false } : { isBackgroundSearch: false }
